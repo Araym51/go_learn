@@ -2,7 +2,7 @@ package main
 
 import (
 	"fmt"
-	"unicode/utf8"
+	"regexp"
 )
 
 /*
@@ -10,25 +10,17 @@ import (
 Длина пароля должна быть не менее 5 символов, он может содержать только арабские цифры и буквы латинского алфавита.
 На вход подается строка-пароль. Если пароль соответствует требованиям - вывести "Ok", иначе вывести "Wrong password"
 */
-func main(){
+func main() {
 	pass := ""
 	fmt.Scanln(&pass)
-	fmt.Println(only_latin(pass))
-}
-
-func str_len(input_string string) bool{
-	if len(input_string) >= 5 {
-		return true
+	if reg_exp(pass) {
+		fmt.Println("Ok")
 	} else {
-		return false
+		fmt.Println("Wrong password")
 	}
 }
 
-func only_latin(input_string string) bool{
-	if utf8.RuneCountInString(input_string)==len(input_string) {
-		return true
-	} else {
-		return false
-	}
-
+func reg_exp(input_string string) bool {
+	re, _ := regexp.MatchString(`^[a-zA-Z0-9]{5,}$`, input_string)
+	return re
 }
